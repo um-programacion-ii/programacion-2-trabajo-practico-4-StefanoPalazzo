@@ -1,8 +1,10 @@
-package main.java.com.biblioteca.model;
+package com.biblioteca.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.biblioteca.model.Libro;
+import com.biblioteca.model.Usuario;
+
+
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -15,4 +17,13 @@ public class Prestamo {
     private Usuario usuario;
     private LocalDate fechaPrestamo;
     private LocalDate fechaDevolucion;
+
+    // Lombok no me generaba estos getters y setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

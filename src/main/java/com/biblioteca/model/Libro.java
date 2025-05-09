@@ -1,4 +1,4 @@
-package main.java.com.biblioteca.model;
+package com.biblioteca.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
