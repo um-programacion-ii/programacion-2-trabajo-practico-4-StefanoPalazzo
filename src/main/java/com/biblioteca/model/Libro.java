@@ -14,4 +14,8 @@ public class Libro {
     private String titulo;
     private String autor;
     private EstadoLibro estado;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

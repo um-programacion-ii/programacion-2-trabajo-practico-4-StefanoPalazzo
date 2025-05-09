@@ -4,7 +4,7 @@ import com.biblioteca.model.Usuario;
 import java.util.List;
 
 public interface IUsuarioService {
-    Usuario buscarPorDni(String dni);
+    Usuario buscarPorDni(Long dni);
     List<Usuario> obtenerTodos();
     Usuario guardar(Usuario usuario);
     void eliminar(Long id);
