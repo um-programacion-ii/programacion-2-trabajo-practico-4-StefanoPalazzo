@@ -14,7 +14,6 @@ public class Usuario {
     private String email;
     private EstadoUsuario estado;
 
-    // Lombok no me generaba estos getters y setters
     public void setId(Long id) {
         this.id = id;
     }

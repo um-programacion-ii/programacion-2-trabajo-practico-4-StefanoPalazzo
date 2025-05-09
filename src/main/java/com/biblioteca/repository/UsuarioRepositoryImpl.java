@@ -20,15 +20,11 @@ public class UsuarioRepositoryImpl implements IUsuarioRepository {
         return usuario;
     }
 
-    @Override
-    public Optional<Usuario> findById(Long id) {
-        return Optional.ofNullable(usuarios.get(id));
-    }
 
     @Override
-    public Optional<Usuario> findByDni(String dni) {
+    public Optional<Usuario> findByDni(Long dni) {
         return usuarios.values().stream()
-                .filter(u -> u.getId() == (Integer.parseInt(dni)))
+                .filter(u -> u.getId() == (dni))
                 .findFirst();
     }
 

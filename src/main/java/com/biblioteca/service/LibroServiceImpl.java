@@ -17,9 +17,9 @@ public class LibroServiceImpl implements ILibroService {
     }
 
     @Override
-    public Libro buscarPorIsbn(Long isbn) {
-        return libroRepository.findById(isbn)
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado con ISBN: " + isbn));
+    public Libro buscarPorId(Long id) {
+        return libroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Libro no encontrado con ID: " + id));
     }
 
     @Override

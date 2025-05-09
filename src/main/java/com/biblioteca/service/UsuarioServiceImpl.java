@@ -16,7 +16,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public Usuario buscarPorDni(String dni) {
+    public Usuario buscarPorDni(Long dni) {
         return usuarioRepository.findByDni(dni)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con DNI: " + dni));
     }
