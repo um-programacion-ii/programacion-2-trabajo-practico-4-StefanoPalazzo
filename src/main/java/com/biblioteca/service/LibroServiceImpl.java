@@ -2,7 +2,7 @@ package com.biblioteca.service;
 
 import com.biblioteca.interfaces.ILibroRepository;
 import com.biblioteca.interfaces.ILibroService;
-import main.java.com.biblioteca.model.Libro;
+import com.biblioteca.model.Libro;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,5 +40,4 @@ public class LibroServiceImpl implements ILibroService {
         return null;
     }
 
-    // métodos ya implementados
 }
