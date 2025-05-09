@@ -21,9 +21,9 @@ public class UsuarioController {
         return usuarioService.obtenerTodos();
     }
 
-    @GetMapping("/{dni}")
-    public Usuario obtenerPorId(@PathVariable Long dni) {
-        return usuarioService.buscarPorDni(dni);
+    @GetMapping("/{id}")
+    public Usuario obtenerPorId(@PathVariable Long id) {
+        return usuarioService.buscarPorDni(id);
     }
 
     @PostMapping
