@@ -1,5 +1,6 @@
 package com.biblioteca.service;
 
+import com.biblioteca.exception.PrestamoNoEncontradoException;
 import com.biblioteca.model.Prestamo;
 import com.biblioteca.interfaces.IPrestamoRepository;
 import com.biblioteca.interfaces.IPrestamoService;
@@ -18,7 +19,7 @@ public class PrestamoServiceImpl implements IPrestamoService {
     @Override
     public Prestamo buscarPorId(Long id) {
         return prestamoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Préstamo no encontrado con ID: " + id));
+                .orElseThrow(() -> new PrestamoNoEncontradoException("Préstamo no encontrado con ID: " + id));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class PrestamoServiceImpl implements IPrestamoService {
     @Override
     public Prestamo actualizar(Long id, Prestamo prestamo) {
         if (!prestamoRepository.existsById(id)) {
-            throw new RuntimeException("Préstamo no encontrado con ID: " + id);
+            throw new PrestamoNoEncontradoException("Préstamo no encontrado con ID: " + id);
         }
         prestamo.setId(id);
         return prestamoRepository.save(prestamo);

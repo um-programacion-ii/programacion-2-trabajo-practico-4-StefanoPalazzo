@@ -1,5 +1,6 @@
 package com.biblioteca.service;
 
+import com.biblioteca.exception.LibroNoEncontradoException;
 import com.biblioteca.interfaces.ILibroRepository;
 import com.biblioteca.interfaces.ILibroService;
 import com.biblioteca.model.Libro;
@@ -22,6 +23,11 @@ public class LibroServiceImpl implements ILibroService {
                 .orElseThrow(() -> new RuntimeException("Libro no encontrado con ID: " + id));
     }
 
+    public Libro buscarPorIsbn(String isbn) {
+        return libroRepository.findByIsbn(isbn)
+                .orElseThrow(() -> new LibroNoEncontradoException("Libro no encontrado con ID: " + isbn));
+    }
+
     @Override
     public List<Libro> obtenerTodos() {return libroRepository.findAll();}
 
@@ -37,7 +43,7 @@ public class LibroServiceImpl implements ILibroService {
     @Override
     public Libro actualizar(Long id, Libro libro) {
         if (!libroRepository.existsById(id)) {
-            throw new RuntimeException("Libro no encontrado con ID: " + id);
+            throw new LibroNoEncontradoException("Libro no encontrado con ID: " + id);
         }
         libro.setId(id);
         return libroRepository.save(libro);
