@@ -1,4 +1,4 @@
-package main.java.com.biblioteca.model.enums;
+package com.biblioteca.model.enums;
 
 public enum EstadoUsuario {
     ACTIVO,
