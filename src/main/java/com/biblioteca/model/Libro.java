@@ -3,7 +3,7 @@ package com.biblioteca.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import main.java.com.biblioteca.model.enums.EstadoLibro;
+import com.biblioteca.model.enums.EstadoLibro;
 
 @Data
 @NoArgsConstructor
@@ -17,5 +17,12 @@ public class Libro {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public String getIsbn() {
+        return isbn;
     }
 }

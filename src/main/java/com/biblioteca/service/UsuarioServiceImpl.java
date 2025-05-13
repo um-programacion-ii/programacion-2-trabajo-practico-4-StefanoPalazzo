@@ -1,5 +1,6 @@
 package com.biblioteca.service;
 
+import com.biblioteca.exception.UsuarioNoEncontradoException;
 import com.biblioteca.model.Usuario;
 import com.biblioteca.interfaces.IUsuarioRepository;
 import com.biblioteca.interfaces.IUsuarioService;
@@ -18,7 +19,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public Usuario buscarPorDni(Long dni) {
         return usuarioRepository.findByDni(dni)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con DNI: " + dni));
+                .orElseThrow(() -> new UsuarioNoEncontradoException("Usuario no encontrado con DNI: " + dni));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     @Override
     public Usuario actualizar(Long id, Usuario usuario) {
         if (!usuarioRepository.existsById(id)) {
-            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+            throw new UsuarioNoEncontradoException("Usuario no encontrado con ID: " + id);
         }
         usuario.setId(id);
 

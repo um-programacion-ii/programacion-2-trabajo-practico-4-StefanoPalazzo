@@ -3,7 +3,7 @@ package com.biblioteca.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import main.java.com.biblioteca.model.enums.EstadoUsuario;
+import com.biblioteca.model.enums.EstadoUsuario;
 
 @Data
 @NoArgsConstructor
