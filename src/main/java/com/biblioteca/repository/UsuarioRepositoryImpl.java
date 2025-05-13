@@ -24,7 +24,7 @@ public class UsuarioRepositoryImpl implements IUsuarioRepository {
     @Override
     public Optional<Usuario> findByDni(Long dni) {
         return usuarios.values().stream()
-                .filter(u -> u.getId() == (dni))
+                .filter(u -> Objects.equals(u.getId(), dni))
                 .findFirst();
     }
 
