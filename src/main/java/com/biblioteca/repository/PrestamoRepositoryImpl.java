@@ -16,6 +16,13 @@ public class PrestamoRepositoryImpl implements IPrestamoRepository {
         if (prestamo.getId() == null) {
             prestamo.setId(nextId++);
         }
+        if (prestamo.getUsuario() == null) {
+            throw new IllegalArgumentException("El usuario no puede ser nulo");
+        }
+        if (prestamo.getLibro() == null) {
+            throw new IllegalArgumentException("El libro no puede ser nulo");
+        }
+
         prestamos.put(prestamo.getId(), prestamo);
         return prestamo;
     }

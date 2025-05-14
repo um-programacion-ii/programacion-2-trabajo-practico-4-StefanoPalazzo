@@ -1,34 +1,68 @@
 package com.biblioteca.controller;
 
+import com.biblioteca.exception.UsuarioNoEncontradoException;
 import com.biblioteca.model.Usuario;
-import com.biblioteca.model.enums.EstadoLibro;
 import com.biblioteca.model.enums.EstadoUsuario;
+import com.biblioteca.service.UsuarioServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.*;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UsuarioControllerIntegrationTest {
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(UsuarioController.class)
+class UsuarioControllerIntegrationTest {
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private MockMvc mockMvc;
+
+    @MockBean
+    private UsuarioServiceImpl usuarioService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
-    void testCrearYBuscarUsuario() {
-        Usuario nuevoUsuario = new Usuario(null, "Juan", "Perez", EstadoUsuario.ACTIVO);
-        ResponseEntity<Usuario> postResponse = restTemplate.postForEntity("/api/usuarios", nuevoUsuario, Usuario.class);
-        assertEquals(HttpStatus.OK, postResponse.getStatusCode());
+    @DisplayName("POST /api/usuarios - crear usuario exitosamente")
+    void crearUsuario_ok() throws Exception {
+        Usuario nuevo = new Usuario(null, "Juan", "Perez@gmail.com", EstadoUsuario.ACTIVO);
+        Usuario creado = new Usuario(1L, "Juan", "Perez@gmail.com", EstadoUsuario.ACTIVO);
 
-        Usuario creado = postResponse.getBody();
-        assertNotNull(creado);
-        assertNotNull(creado.getId());
+        when(usuarioService.guardar(any(Usuario.class))).thenReturn(creado);
 
-        ResponseEntity<Usuario> getResponse = restTemplate.getForEntity("/api/usuarios/" + creado.getId(), Usuario.class);
-        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
-        assertEquals("Juan", getResponse.getBody().getNombre());
+        mockMvc.perform(post("/api/usuarios")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(nuevo)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(creado.getId()))
+                .andExpect(jsonPath("$.nombre").value("Juan"))
+                .andExpect(jsonPath("$.email").value("Perez@gmail.com"))
+                .andExpect(jsonPath("$.estado").value("ACTIVO"));
+
+        verify(usuarioService).guardar(any(Usuario.class));
     }
+
+    @Test
+    @DisplayName("GET /api/usuarios/{id} - usuario no encontrado")
+    void buscarUsuario_noExiste() throws Exception {
+        Long id = 99L;
+        when(usuarioService.buscarPorDni(id)).thenThrow(new UsuarioNoEncontradoException("Usuario no encontrado"));
+
+        mockMvc.perform(get("/api/usuarios/{id}", id))
+                .andExpect(status().isNotFound());
+
+        verify(usuarioService).buscarPorDni(id);
+    }
+
 }
