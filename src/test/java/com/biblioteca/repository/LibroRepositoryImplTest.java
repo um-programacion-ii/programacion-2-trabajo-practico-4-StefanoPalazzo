@@ -63,4 +63,17 @@ class LibroRepositoryImplTest {
         Libro libro = libroRepository.save(new Libro(null, "isbn", "Existente", "Autor", EstadoLibro.DISPONIBLE));
         assertTrue(libroRepository.existsById(libro.getId()));
     }
+
+    @Test
+    void testInvalidParameters() {
+        // Test para título vacío
+        assertThrows(IllegalArgumentException.class, () -> {
+            libroRepository.save(new Libro(null, "123-456-789", "", "Autor", EstadoLibro.DISPONIBLE));
+        });
+
+        // Test para autor vacío
+        assertThrows(IllegalArgumentException.class, () -> {
+            libroRepository.save(new Libro(null, "123-456-789", "Titulo", "", EstadoLibro.DISPONIBLE));
+        });
+    }
 }

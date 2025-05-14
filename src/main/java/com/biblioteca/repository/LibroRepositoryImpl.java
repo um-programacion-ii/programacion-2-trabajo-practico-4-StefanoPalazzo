@@ -17,6 +17,14 @@ public class LibroRepositoryImpl implements ILibroRepository {
         if (libro.getId() == null) {
             libro.setId(nextId++);
         }
+        if (libro.getTitulo() == null || libro.getTitulo().isEmpty()) {
+            throw new IllegalArgumentException("El título no puede ser nulo o vacío");
+        }
+
+        if (libro.getAutor() == null || libro.getAutor().isEmpty()) {
+            throw new IllegalArgumentException("El autor no puede ser nulo o vacío");
+        }
+
         libros.put(libro.getId(), libro);
         return libro;
     }
@@ -31,6 +39,7 @@ public class LibroRepositoryImpl implements ILibroRepository {
         return libros.values().stream()
                 .filter(libro -> isbn.equals(libro.getIsbn()))
                 .findFirst();
+
     }
 
     @Override
