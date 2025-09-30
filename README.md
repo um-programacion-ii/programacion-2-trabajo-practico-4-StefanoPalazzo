@@ -1,10 +1,201 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Vg2EF-QZ)
 # 🚀 Trabajo Práctico: Sistema de Gestión de Biblioteca con Spring Framework
+
+
+### Alumno
+**Nombre y Apellido:** Stefano Palazzo
+
+---
 
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.4.5-green)
 ![Java](https://img.shields.io/badge/Java-21-orange)
 ![Maven](https://img.shields.io/badge/Maven-3.9.0-red)
 ![JUnit5](https://img.shields.io/badge/JUnit-5.10.1-green)
 ![Mockito](https://img.shields.io/badge/Mockito-5.8.0-blue)
+
+Pensado durante un par de segundos
+
+
+## Índice
+1. [📂 Estructura del Proyecto](#-estructura-del-proyecto)
+2. [✅ Requisitos previos](#-requisitos-previos)
+3. [Instrucciones para correr el proyecto](#instrucciones-para-correr-el-proyecto)
+4. [Endpoints](#endpoints)
+
+    1. [📘 Libros](#-libros)
+    2. [📘 Usuarios](#-usuarios)
+    3. [📘 Préstamos](#-préstamos)
+5. [Ejemplos de Uso con curl](#ejemplos-de-uso-con-curl)
+6. [🏗️ Documentación de Arquitectura y Decisiones de Diseño](#️-documentación-de-arquitectura-y-decisiones-de-diseño)
+7. [Consignas](#consignas)
+
+
+
+## 📂 Estructura del Proyecto
+
+```text
+├── pom.xml
+├── README.md
+└── src
+    ├── main
+    │   └── java/com/biblioteca
+    │       ├── BibliotecaApplication.java
+    │       ├── 📂 controller
+    │       ├── 📂 exception
+    │       ├── 📂 interfaces
+    │       ├── 📂 model
+    │       │   └── 📂 enums
+    │       ├── 📂 repository
+    │       └── 📂 service
+    └── test
+        └── java/com/biblioteca
+            ├── BibliotecaApplicationTests.java
+            ├── 📂 controller
+            ├── 📂 repository
+            └── 📂 service
+```
+
+Este proyecto sigue la estructura estándar de una aplicación Spring Boot con Maven. A continuación se describe brevemente cada carpeta:
+
+- `pom.xml`: Archivo de configuración de dependencias y plugins de Maven.
+- `README.md`: Documentación general del proyecto.
+- `src/main/java/com/biblioteca/`:
+   - `BibliotecaApplication.java`: Clase principal que inicia la aplicación.
+   - `controller/`: Define los endpoints REST.
+   - `exception/`: Manejo centralizado de errores.
+   - `interfaces/`: Interfaces para repositorios y servicios.
+   - `model/`: Contiene las entidades y objetos de dominio.
+      - `enums/`: Enumeraciones usadas por los modelos.
+   - `repository/`: Acceso a datos y persistencia.
+   - `service/`: Lógica de negocio.
+- `src/test/java/com/biblioteca/`:
+   - `BibliotecaApplicationTests.java`: Prueba de carga del contexto de Spring.
+   - `controller/`, `repository/`, `service/`: Pruebas unitarias y de integración por capa.
+
+
+## ✅ Requisitos previos
+
+- Java 17 o superior
+- IDE como IntelliJ IDEA o Eclipse
+- (opcional) Maven o Gradle
+
+## Instrucciones para correr el proyecto
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/um-programacion-ii/programacion-2-trabajo-practico-4-StefanoPalazzo.git
+   ```
+2. Navegar a la carpeta del proyecto:
+   ```bash
+    cd nombre-del-repositorio
+    ```
+3. Compilar el proyecto:
+   ```bash
+   mvn programacion-2-trabajo-practico-4-StefanoPalazzo/
+   ```
+4. Ejecutar la aplicación:
+   ```bash
+   mvn spring-boot:run
+   ```
+5. Acceder a la API en el navegador o Postman:
+   ejemplo:
+   ```bash
+   http://localhost:8080/api/libros
+   ```
+6. Para ejecutar los tests:
+   ```bash
+   mvn test
+   ```
+
+## Endpoints
+### 📘 Libros
+| Método |        Ruta        | Descripción                   |
+| :----: | :----------------: | :---------------------------- |
+|   GET  |    `/api/libros`   | Listar todos los libros       |
+|   GET  | `/api/libros/{id}` | Obtener un libro por su ID    |
+|  POST  |    `/api/libros`   | Crear un nuevo libro          |
+|   PUT  | `/api/libros/{id}` | Actualizar un libro existente |
+| DELETE | `/api/libros/{id}` | Eliminar un libro por su ID   |
+
+### 📘 Usuarios
+| Método |        Ruta         | Descripción                   |
+| :----: | :-----------------: | :---------------------------- |
+|   GET  |    `/api/usuarios`  | Listar todos los usuarios     |
+|   GET  | `/api/usuarios/{id}` | Obtener un usuario por su ID  |
+|  POST  |    `/api/usuarios`   | Crear un nuevo usuario        |
+|   PUT  | `/api/usuarios/{id}` | Actualizar un usuario existente |
+| DELETE | `/api/usuarios/{id}` | Eliminar un usuario por su ID |
+
+### 📘 Préstamos
+| Método |          Ruta           | Descripción                   |
+| :----: | :---------------------: | :---------------------------- |
+|   GET  |      `/api/prestamos`   | Listar todos los préstamos    |
+|   GET  |   `/api/prestamos/{id}` | Obtener un préstamo por su ID |
+|  POST  |      `/api/prestamos`   | Crear un nuevo préstamo       |
+|   PUT  |   `/api/prestamos/{id}` | Actualizar un préstamo existente |
+| DELETE |   `/api/prestamos/{id}` | Eliminar un préstamo por su ID |
+
+## Ejemplos de Uso con curl
+
+### Crear un nuevo libro
+```bash 
+curl -X POST http://localhost:8080/api/libros \
+-H "Content-Type: application/json" \
+-d '{
+  "isbn": "978-3-16-148410-0",
+  "titulo": "El Principito",
+  "autor": "Antoine de Saint-Exupéry",
+  "estado": "DISPONIBLE"
+}'
+```
+### Obtener todos los libros
+```bash
+curl -X GET http://localhost:8080/api/libros
+```
+### Actualizar un libro
+```bash
+curl -X PUT http://localhost:8080/api/libros/1 \
+-H "Content-Type: application/json" \
+-d '{
+  "isbn": "978-3-16-148410-0",
+  "titulo": "El Principito",
+  "autor": "Antoine de Saint-Exupéry",
+  "estado": "PRESTADO"
+}'
+```
+### Eliminar un libro
+```bash
+curl -X DELETE http://localhost:8080/api/libros/1
+```
+### Obtener un libro por ID
+```bash
+curl -X GET http://localhost:8080/api/libros/1
+```
+
+## 🏗️ Documentación de Arquitectura y Decisiones de Diseño
+
+### Arquitectura
+- Capas separadas:
+    - Controller: expone la API y traduce excepciones en respuestas HTTP.
+    - Service: contiene la lógica de negocio y valida reglas de dominio.
+    - Repository: acceso a datos y persistencia (En este caso no hay persistencia ya que se guarda en memoria).
+- Principios SOLID aplicados:
+    - SRP: cada clase tiene una única responsabilidad.
+    - ISP & DIP: se usan interfaces para servicios y repositorios, facilitando pruebas unitarias e inyección de mocks.
+- Pruebas:
+    - Se implementan pruebas unitarias para servicios y controladores, asegurando la calidad del código.
+    - Se usan mocks para simular dependencias y verificar interacciones.
+    - Se implementan pruebas de integración para verificar el funcionamiento de los endpoints.
+    - Se usan herramientas como JUnit y Mockito para facilitar el testing.
+    - Se sigue el patrón Arrange-Act-Assert para estructurar las pruebas.
+
+### Decisiones de Diseño
+- Se eligió Spring Boot por su facilidad de uso y configuración rápida.
+- Se usó Lombok para reducir el boilerplate de código en los modelos.
+- Se implementó un repositorio en memoria para simplificar la persistencia de datos.
+- Se usaron enums para representar estados de los libros y préstamos, mejorando la legibilidad del código.
+- Se implementaron excepciones personalizadas para manejar errores específicos, como `LibroNoEncontradoException` y `UsuarioNoEncontradoException`.
+
+# Consignas
 
 ## ⚠️ Importante: Antes de Comenzar
 
@@ -118,8 +309,8 @@ Desarrollar un sistema de gestión de biblioteca utilizando Spring Framework, im
 > 💡 **Nota**: Esta estimación considera la experiencia adquirida en trabajos anteriores y la complejidad de implementar una arquitectura en capas con Spring Framework. El tiempo se ha ajustado considerando que no se requiere implementación de persistencia real.
 
 ## 👨‍🎓 Información del Alumno
-- **Nombre y Apellido**: [Nombre y Apellido del Alumno]
-- **Legajo**: [Número de Legajo]
+- **Nombre y Apellido**: Stefano Palazzo
+- **Legajo**: 63160
 
 ## 📋 Requisitos Previos
 
